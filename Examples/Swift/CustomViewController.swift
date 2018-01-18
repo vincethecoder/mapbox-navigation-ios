@@ -15,7 +15,7 @@ class CustomViewController: UIViewController, MGLMapViewDelegate, AVSpeechSynthe
     lazy var speechSynth = AVSpeechSynthesizer()
     var userRoute: Route?
     var simulateLocation = false
-    
+
     @IBOutlet var mapView: MGLMapView!
     @IBOutlet weak var arrowView: UILabel!
     @IBOutlet weak var instructionLabel: UILabel!
@@ -28,11 +28,11 @@ class CustomViewController: UIViewController, MGLMapViewDelegate, AVSpeechSynthe
         mapView.delegate = self
 
         textDistanceFormatter.numberFormatter.maximumFractionDigits = 0
-        
+
         let locationManager = simulateLocation ? SimulatedLocationManager(route: userRoute!) : NavigationLocationManager()
-        
+
         routeController = RouteController(along: userRoute!, directions: directions, locationManager: locationManager)
-        
+
         mapView.userLocationVerticalAlignment = .center
         mapView.userTrackingMode = .followWithCourse
 
@@ -41,10 +41,10 @@ class CustomViewController: UIViewController, MGLMapViewDelegate, AVSpeechSynthe
         // Start navigation
         routeController.resume()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         // Disable the map view's default location manager if we're simulating locations
         if simulateLocation {
             mapView.locationManager.stopUpdatingHeading()
@@ -76,7 +76,7 @@ class CustomViewController: UIViewController, MGLMapViewDelegate, AVSpeechSynthe
     // When an instruction should be given
     @objc func shouldSpeak(_ notification: NSNotification) {
         let routeProgress = notification.userInfo![MBRouteControllerDidPassSpokenInstructionPointRouteProgressKey] as! RouteProgress
-        
+
         guard let text = routeProgress.currentLegProgress.currentStepProgress.currentSpokenInstruction?.text else { return }
 
         let utterance = AVSpeechUtterance(string: text)
@@ -110,7 +110,7 @@ class CustomViewController: UIViewController, MGLMapViewDelegate, AVSpeechSynthe
         default:
             self.arrowView.text = "⬆️"
         }
-        
+
         self.instructionLabel.text = routeProgress.currentLegProgress.currentStepProgress.step.instructionsDisplayedAlongStep?.first?.primaryText
         let distance = routeProgress.currentLegProgress.currentStepProgress.distanceRemaining
         self.distanceLabel.text = textDistanceFormatter.string(fromMeters: distance)
