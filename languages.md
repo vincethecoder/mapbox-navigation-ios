@@ -4,7 +4,7 @@
 |----------|-------------|----------------------|
 | Catalan | ✅ | ❌ |
 | Chinese (Simplified) | ✅ | ❌ |
-| Danish | ✅ | ❌ |
+| Danish | ✅ | ✅ |
 | Dutch | ✅ | ✅ |
 | English | ✅ | ✅ |
 | French | ✅ | ✅ |
