@@ -573,6 +573,9 @@ extension RouteController: CLLocationManagerDelegate {
         if simulatedLocation == nil, let currentLocation = filteredLocations.first,
            shouldAnimateTunnel(for: currentLocation, invalidLocationCount: &invalidLocationCount, maxFailedAttempts: 3) {
             
+            // location updates should be simulated when driving through tunnels
+            isDeadReckoningEnabled = true
+            
             // Mock tunnel
             let tunnelGeom = Polyline([CLLocationCoordinate2D]()) /// Simulate a location
             guard let closestCoordinate = tunnelGeom.closestCoordinate(to: currentLocation.coordinate), let lastCoordinate = tunnelGeom.coordinates.last else { return }
